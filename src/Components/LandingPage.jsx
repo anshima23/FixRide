@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaArrowUpLong } from 'react-icons/fa6';
+import carImage from "../assets/car.png"; // Your car image
+import roadImage from "../assets/road.jpeg"; // Your road image
+
 
 function LandingPage() {
   return (

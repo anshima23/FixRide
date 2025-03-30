@@ -31,8 +31,10 @@ function Ready() {
       <div className="flex flex-col items-center relative z-10 mt-30">
         <h1 className="font-['Neue_Montreal'] text-[10vw] leading-[10vw] tracking-tight text-center">
           <span className="block -ml-8 relative">READY</span>
-          <span className="block -ml-12 mt-2 relative">TO START</span>
-          <span className="block -ml-16 mt-2 relative">THE PROJECT?</span>
+          <span className="block -ml-12 mt-2 relative">TO USE OUR</span>
+          <span className="block -ml-16 mt-2 relative">
+     APP <span className="text-green-800">FixMyRide</span> 
+  </span>
         </h1>
 
 {/* Eyes positioned above the text */}
@@ -73,13 +75,8 @@ function Ready() {
       
         <div className="flex flex-col items-center mt-10 space-y-4">
           <button className="flex uppercase gap-4 items-center px-10 py-4 bg-zinc-900 rounded-full text-white">
-            Read More
+            Explore App
             <div className="w-2 h-2 bg-zinc-100 rounded-full"></div>
-          </button>
-          <span className="text-black font-bold">OR</span>
-          <button className="flex uppercase gap-4 items-center px-10 py-4 bg-zinc-100 rounded-full text-black">
-            Read More
-            <div className="w-2 h-2 bg-zinc-900 rounded-full"></div>
           </button>
         </div>
       </div>

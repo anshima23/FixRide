@@ -5,7 +5,7 @@ import Navbar from './Components/Navbar';
 import LandingPage from './Components/LandingPage';
 import Marquee from './Components/Marquee';
 import About from './Components/About';
-import Eyes from './Components/Eyes';
+import Car from './Components/Car';
 import Featured from './Components/Featured';
 import Cards from './Components/Cards';
 import Ready from './Components/Ready';
@@ -29,7 +29,7 @@ function App() {
           <>
             <LandingPage />
             <Marquee />
-            <Eyes />
+            <Car />
             <About />
             <Featured />
             <Cards />
