@@ -11,8 +11,8 @@ function Footer() {
     >
       <div className='w-1/2 h-full flex flex-col justify-between font-["Founders_Grotesk_X-Condensed"]'>
         <div className="heading">
-          <h1 className='text-[6vw] font-semibold uppercase leading-none mb-5'>EYE-</h1>
-          <h1 className='text-[6vw] font-semibold uppercase leading-none'>OPENING</h1>
+          <h1 className='text-[6vw] font-semibold uppercase leading-none mb-5'>FAST FIXES, </h1>
+          <h1 className='text-[6vw] font-semibold uppercase leading-none'>RELIABLE RIDES </h1>
         </div>
         {/* SVG positioned absolutely at the bottom left corner */}
         <svg 
@@ -27,7 +27,7 @@ function Footer() {
         </svg>
       </div>
       <div className="w-1/2">
-        <h1 className='text-[4vw] font-semibold uppercase leading-none mb-10'>PRESENTATIONS</h1>
+        
         <div className="dets font-['Neue_Montreal']">
           <a href="#" className="block text-xl font-light mb-2">Facebook</a>
           <a href="#" className="block text-xl font-light mb-2">Instagram</a>

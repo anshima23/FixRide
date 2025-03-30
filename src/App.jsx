@@ -1,4 +1,6 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import LocomotiveScroll from 'locomotive-scroll';
 import Navbar from './Components/Navbar';
 import LandingPage from './Components/LandingPage';
 import Marquee from './Components/Marquee';
@@ -13,30 +15,27 @@ import OurWorks from "./Links/OurWorks";
 import AboutUs from "./Links/AboutUs";
 import Insights from "./Links/Insights";
 import Contact from "./Links/Contact";
-import LocomotiveScroll from 'locomotive-scroll';
-import { Routes, Route } from 'react-router-dom';
-
-
 
 function App() {
-  
-  const locomotiveScroll = new LocomotiveScroll();
+  React.useEffect(() => {
+    new LocomotiveScroll();
+  }, []);
 
   return (
-    <div className='w-full h-screen bg-zinc-900 text-white'>
+    <div className='w-full min-h-screen bg-zinc-900 text-white'>
       <Navbar />
       <Routes>
         <Route path="/" element={
-          <div>
-            <LandingPage/>
+          <>
+            <LandingPage />
             <Marquee />
             <Eyes />
-            <About/>
+            <About />
             <Featured />
             <Cards />
             <Ready />
             <Footer />
-          </div>
+          </>
         } />
         <Route path="/services" element={<Services />} />
         <Route path="/our-works" element={<OurWorks />} />
@@ -45,10 +44,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
-  )
+  );
 }
 
-export default App
-
-
-
+export default App;

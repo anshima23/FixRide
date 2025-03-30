@@ -3,31 +3,32 @@ import { motion } from "framer-motion";
 
 const inputFields = [
   { placeholder: "Your Name", label: "Hi! My name is" },
-  { placeholder: "Your Company", label: "and I work with" },
+  { placeholder: "Phone Number", label: "Phone Number is " },
   {
-    placeholder: "Project Details",
-    label: "I'm looking for a partner to help me with",
+    placeholder: "Location:",
+    label: "and I live in",
   },
   {
-    placeholder: "Completion Date",
-    label: "With an idea of having that completed",
+    placeholder: "Vehicle Details",
+    label: "I have this vehicle",
   },
   {
-    placeholder: "Budget Range",
-    label: "I am hoping to stay around a budget range of",
+    placeholder: "Service Details",
+    label: "I'm looking for service",
   },
-  { placeholder: "Contact Information", label: "You can reach me at" },
+  { placeholder: "Facing Issue", label: "I am facing this issue" },
   {
     placeholder: "Additional Information",
-    label: "Optionally, I'm sharing more:",
+    label: "this is my contact method",
   },
 ];
 
+
 const box1Texts = [
-  "Do you animate presentations?",
-  "Do you join forces with other agencies?",
-  "I want to become a part of the team!Do you hire?",
-  "Would you like to jump on a podcast or YouTube video?",
+  "How can I book a mechanic for emergency roadside assistance?",
+  "What types of vehicle repairs and services are offered?",
+  "How do I track the mechanic’s location in real-time?",
+  "What payment options are available for the services?",
 ];
 
 function Contact() {
@@ -75,7 +76,7 @@ function Contact() {
         >
           {/* Upper heading */}
           <div className="textstructure mt-20 px-20 flex flex-col items-center">
-            {["LET'S START", "A PROJECT TOGETHER"].map((item, index) => (
+            {["REACH OUT, ", " WE'RE HERE ANYTIME!"].map((item, index) => (
               <div className="masker" key={index}>
                 <div className="w-fit flex items-end overflow-hidden">
                   {index === 0 && (
@@ -136,8 +137,8 @@ function Contact() {
         >
           {/* Text and Buttons */}
           <div className="flex flex-col items-center relative z-10">
-            <h1 className="font-['Neue_Montreal'] text-[10vw] leading-[10vw] tracking-tight text-center">
-              {["INSTAGRAM", "BEHANCE", "FACEBOOK", "LINKEDIN"].map((text, index) => (
+            <h1 className="font-['Neue_Montreal'] text-[7vw] leading-[10vw] tracking-tight text-center">
+              {["DELIVERYPERSONNEL", "EMERGENCY RESPONDERS", "ON-DEMAND TECHNICIANS", "ROADSIDE ASSISTANCE PROVIDERS"].map((text, index) => (
                 <motion.span
                   key={index}
                   className="block relative"

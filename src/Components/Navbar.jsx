@@ -1,6 +1,14 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
+
+const navItems = [
+  { name: "Services", path: "/services" },
+  { name: "Our Works", path: "/our-works" },
+  { name: "About Us", path: "/about-us" },
+  { name: "Insights", path: "/insights" },
+  { name: "Contact", path: "/contact" }
+];
 
 function Navbar() {
   const linkRefs = useRef([]);
@@ -11,14 +19,12 @@ function Navbar() {
 
   const handleMouseEnter = (index) => {
     setActiveIndex(index);
-
     gsap.to(linkRefs.current[index].querySelector(".underline"), {
       scaleX: 1,
       opacity: 1,
       duration: 0.3,
       ease: "power2.out",
     });
-
     gsap.to(linkRefs.current[index], {
       y: -10,
       opacity: 0,
@@ -60,20 +66,13 @@ function Navbar() {
   const handleClick = (index, path, name) => {
     setActiveIndex(index);
     setOverlayText(name);
-  
-    // Ensure the overlay starts from the bottom
     gsap.set(overlayRef.current, { y: "100%" });
-  
-    // Start overlay animation
     gsap.to(overlayRef.current, {
       y: "0%",
       duration: 0.7,
       ease: "power2.out",
       onComplete: () => {
-        // Navigate to the new path after the overlay animation is complete
         navigate(path);
-  
-        // Start the second part of the overlay animation
         gsap.to(overlayRef.current, {
           y: "-100%",
           duration: 0.7,
@@ -82,46 +81,32 @@ function Navbar() {
       },
     });
   };
-  
+
   return (
     <div>
-      {/* Overlay */}
       <div
         ref={overlayRef}
-        className="fixed top-0 left-0 w-full h-full bg-black flex items-center"
+        className="fixed top-0 left-0 w-full h-full bg-black flex items-center justify-center"
         style={{ transform: "translateY(100%)" }}
       >
-        <p className="text-white text-6xl font-bold absolute left-8 top-1/2 transform -translate-y-1/2">
-          {overlayText}
-        </p>
+        <p className="text-white text-6xl font-bold">{overlayText}</p>
       </div>
-
-      {/* Navbar */}
-      <div className="fixed z-[999] w-full px-20 py-8 font-['Neue Montreal'] flex justify-between items-center">
-        <div className="logo">
-          <h1 className="text-3xl font-bold border-b-4 border-white pb-2">Developers</h1>
-        </div>
-
-        <div className="links flex gap-10">
-          {[
-            { name: "Services", path: "/services" },
-            { name: "Our Works", path: "/our-works" },
-            { name: "About Us", path: "/about-us" },
-            { name: "Insights", path: "/insights" },
-            { name: "Contact", path: "/contact" }
-          ].map((item, index) => (
+      <div className="fixed z-[999] w-full px-4 md:px-10 py-4 md:py-6 font-['Neue Montreal'] flex justify-between items-center bg-black bg-opacity-50">
+        <h1 className="text-xl md:text-2xl font-bold border-b-4 border-white pb-2">Developers</h1>
+        <div className="flex gap-4 md:gap-8">
+          {navItems.map((item, index) => (
             <Link
               key={index}
               ref={(el) => (linkRefs.current[index] = el)}
-              to={item.path} // Define paths for each item
-              className="relative text-lg capitalize font-light text-white overflow-hidden cursor-pointer"
+              to={item.path}
+              className="relative text-sm md:text-base capitalize font-light text-white overflow-hidden cursor-pointer"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => handleClick(index, item.path, item.name)}
             >
               {item.name}
               <span
-                className={`underline absolute bottom-0 left-0 h-0.5 bg-white origin-left ${
+                className={`underline absolute bottom-0 left-0 h-0.5 bg-white origin-left transition-transform ${
                   index === activeIndex ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
                 }`}
               ></span>

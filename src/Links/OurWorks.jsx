@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Ready from "../Components/Ready"; // Adjust the path based on your folder structure
-import Footer from "../Components/Footer"; // Adjust the path based on your folder structure
+import Ready from "../Components/Ready";
+import Footer from "../Components/Footer";
 
-const Box = ({ color, text, imageUrl }) => (
-  <div
-    className={`w-1/2 h-[80vh] ${color} text-white p-12 flex items-center justify-center rounded-lg`}
-  >
+const Box = ({ color, text, imageUrl, description }) => (
+  <div className={`w-1/2 h-[80vh] ${color} p-12 flex items-center justify-center rounded-lg`}>
     <div className="flex flex-col items-center justify-center w-full h-full">
       {imageUrl && (
         <img
           src={imageUrl}
           alt={text}
-          className="w-full h-2/3 object-cover rounded-lg mb-4" // Adjust as needed
+          className="w-full h-2/3 object-cover rounded-lg mb-4"
         />
       )}
-      <div className="text-center text-xl">{text}</div>
+      <div className="text-center text-xl font-bold text-black">{text}</div>
+      <p className="text-center text-md mt-2 text-black">{description}</p>
     </div>
   </div>
 );
@@ -35,7 +34,6 @@ function OurWorks() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
@@ -69,7 +67,6 @@ function OurWorks() {
 
         {/* Eye and Box Section */}
         <div className="relative flex flex-col items-center gap-2 mb-0 bottom-0 left-1/2 transform -translate-x-1/2">
-          {/* Boxes overlapping the eyes */}
           <div
             className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex flex-col gap-2"
             style={{ zIndex: 1 }}
@@ -84,7 +81,6 @@ function OurWorks() {
             ></div>
           </div>
 
-          {/* Eyes */}
           <div className="flex gap-10 mt-10" style={{ zIndex: 0 }}>
             <Eye />
             <Eye />
@@ -98,32 +94,41 @@ function OurWorks() {
         data-scroll-speed="-0.3"
         className="w-full flex flex-col items-center bg-gray-900 py-16"
       >
-        {/* Heading Section */}
         <div className="w-full max-w-screen-xl flex items-center justify-center mb-10">
           <h1 className="text-5xl text-white text-center">
-            We create{" "}
-            <span className="border-b border-white">eye-catching</span> and{" "}
-            <span className="border-b border-white">eye-opening</span> software
-            that educate, inspire, and influence <br />
-            action.
+          We are ready to provide you with seamless and secure services anytime, anywhere.
           </h1>
         </div>
 
-        {/* Box Rows */}
+        {/* Box Sections */}
         <div className="w-full max-w-screen-xl flex flex-col gap-10">
           <div className="w-full flex gap-10">
             <Box
               color="bg-gray-200"
-              imageUrl="https://ochi.design/wp-content/uploads/2022/05/017091720030-1340x858.jpg"
+              imageUrl="https://media.istockphoto.com/id/154368511/photo/woman-and-children-watch-as-man-changes-their-car-tire.webp?a=1&b=1&s=612x612&w=0&k=20&c=7YdW8ZaRcl2rQ_B_o203m8aUgTv7pwri80S7n2iQcMQ="
+              text="Emergency Roadside Assistance"
+              description="Quick and reliable help for car breakdowns, ensuring you reach your destination safely."
             />
             <Box
               color="bg-gray-100"
-              imageUrl="https://images.unsplash.com/photo-1569098644584-210bcd375b59?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              imageUrl="https://plus.unsplash.com/premium_photo-1674375348357-a25140a68bbd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2FyJTIwcmVwYWlyfGVufDB8fDB8fHww"
+              text="Skilled Mechanics at Work"
+              description="Our expert mechanics provide top-notch repair services, ensuring your vehicle runs smoothly."
             />
           </div>
           <div className="w-full flex gap-10">
-            <Box color="bg-gray-200" imageUrl="https://images.unsplash.com/photo-1580983703451-bf6bb44a9917?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGVuZ2luZWVyaW5nfGVufDB8fDB8fHww" />
-            <Box color="bg-gray-100" imageUrl="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+            <Box
+              color="bg-gray-200"
+              imageUrl="https://media.istockphoto.com/id/487729465/photo/i-think-that-guy-is-following-me.webp?a=1&b=1&s=612x612&w=0&k=20&c=NQbNAjp6GTJEZWL9wnVLmhzxpb80SSLnCLb4tdMg26U="
+              text="Safety for Women Drivers"
+              description="Providing a secure and trusted service, especially for women in distress on the road."
+            />
+            <Box
+              color="bg-gray-100"
+              imageUrl="https://plus.unsplash.com/premium_photo-1663040250073-fcee2d2a3fd3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2tpbGxlZCUyMG1lY2hhbmljc3xlbnwwfHwwfHx8MA%3D%3D"
+              text="Reliable Service Network"
+              description="A wide network of trained professionals ensuring quality service anytime, anywhere."
+            />
           </div>
         </div>
       </div>
