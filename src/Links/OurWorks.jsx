@@ -89,49 +89,50 @@ function OurWorks() {
       </div>
 
       <div
-        data-scroll
-        data-scroll-section
-        data-scroll-speed="-0.3"
-        className="w-full flex flex-col items-center bg-gray-900 py-16"
-      >
-        <div className="w-full max-w-screen-xl flex items-center justify-center mb-10">
-          <h1 className="text-5xl text-white text-center">
-          We are ready to provide you with seamless and secure services anytime, anywhere.
-          </h1>
-        </div>
+  data-scroll
+  data-scroll-section
+  data-scroll-speed="-0.3"
+  className="w-full flex flex-col items-center bg-gray-900 py-16 px-4 md:px-8 lg:px-16"
+>
+  <div className="w-full max-w-screen-xl flex items-center justify-center mb-10">
+    <h1 className="text-3xl sm:text-4xl md:text-5xl text-white text-center">
+      We are ready to provide you with seamless and secure services anytime, anywhere.
+    </h1>
+  </div>
 
-        {/* Box Sections */}
-        <div className="w-full max-w-screen-xl flex flex-col gap-10">
-          <div className="w-full flex gap-10">
-            <Box
-              color="bg-gray-200"
-              imageUrl="https://media.istockphoto.com/id/154368511/photo/woman-and-children-watch-as-man-changes-their-car-tire.webp?a=1&b=1&s=612x612&w=0&k=20&c=7YdW8ZaRcl2rQ_B_o203m8aUgTv7pwri80S7n2iQcMQ="
-              text="Emergency Roadside Assistance"
-              description="Quick and reliable help for car breakdowns, ensuring you reach your destination safely."
-            />
-            <Box
-              color="bg-gray-100"
-              imageUrl="https://plus.unsplash.com/premium_photo-1674375348357-a25140a68bbd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2FyJTIwcmVwYWlyfGVufDB8fDB8fHww"
-              text="Skilled Mechanics at Work"
-              description="Our expert mechanics provide top-notch repair services, ensuring your vehicle runs smoothly."
-            />
-          </div>
-          <div className="w-full flex gap-10">
-            <Box
-              color="bg-gray-200"
-              imageUrl="https://media.istockphoto.com/id/487729465/photo/i-think-that-guy-is-following-me.webp?a=1&b=1&s=612x612&w=0&k=20&c=NQbNAjp6GTJEZWL9wnVLmhzxpb80SSLnCLb4tdMg26U="
-              text="Safety for Women Drivers"
-              description="Providing a secure and trusted service, especially for women in distress on the road."
-            />
-            <Box
-              color="bg-gray-100"
-              imageUrl="https://plus.unsplash.com/premium_photo-1663040250073-fcee2d2a3fd3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2tpbGxlZCUyMG1lY2hhbmljc3xlbnwwfHwwfHx8MA%3D%3D"
-              text="Reliable Service Network"
-              description="A wide network of trained professionals ensuring quality service anytime, anywhere."
-            />
-          </div>
-        </div>
-      </div>
+  {/* Box Sections */}
+  <div className="w-full max-w-screen-xl flex flex-col gap-6 md:gap-10">
+    <div className="w-full flex flex-col md:flex-row gap-6 md:gap-10">
+      <Box
+        color="bg-gray-200"
+        imageUrl="https://media.istockphoto.com/id/154368511/photo/woman-and-children-watch-as-man-changes-their-car-tire.webp?a=1&b=1&s=612x612&w=0&k=20&c=7YdW8ZaRcl2rQ_B_o203m8aUgTv7pwri80S7n2iQcMQ="
+        text="Emergency Roadside Assistance"
+        description="Quick and reliable help for car breakdowns, ensuring you reach your destination safely."
+      />
+      <Box
+        color="bg-gray-100"
+        imageUrl="https://plus.unsplash.com/premium_photo-1674375348357-a25140a68bbd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2FyJTIwcmVwYWlyfGVufDB8fDB8fHww"
+        text="Skilled Mechanics at Work"
+        description="Our expert mechanics provide top-notch repair services, ensuring your vehicle runs smoothly."
+      />
+    </div>
+    <div className="w-full flex flex-col md:flex-row gap-6 md:gap-10">
+      <Box
+        color="bg-gray-200"
+        imageUrl="https://media.istockphoto.com/id/487729465/photo/i-think-that-guy-is-following-me.webp?a=1&b=1&s=612x612&w=0&k=20&c=NQbNAjp6GTJEZWL9wnVLmhzxpb80SSLnCLb4tdMg26U="
+        text="Safety for Women Drivers"
+        description="Providing a secure and trusted service, especially for women in distress on the road."
+      />
+      <Box
+        color="bg-gray-100"
+        imageUrl="https://plus.unsplash.com/premium_photo-1663040250073-fcee2d2a3fd3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2tpbGxlZCUyMG1lY2hhbmljc3xlbnwwfHwwfHx8MA%3D%3D"
+        text="Reliable Service Network"
+        description="A wide network of trained professionals ensuring quality service anytime, anywhere."
+      />
+    </div>
+  </div>
+</div>
+
 
       <Ready />
       <Footer />

@@ -73,46 +73,47 @@ function Services() {
       </div>
 
       <div
-        data-scroll
-        data-scroll-section
-        data-scroll-speed="-0.1"
-        className="w-full bg-[#004D43] text-black p-40"
-      >
-        <div className="w-full flex gap-5 border-[#a1b562]">
-          <div className="w-1/2 flex items-start">
-            <span className="text-2xl border-b border-black">
-              What you can expect:
-            </span>
-          </div>
-          <div className="w-1/2">
-            <div className="grid grid-cols-2 gap-5">
-              {boxData.map(({ number, text, image }) => (
-                <div
-                  key={number} // Provide a unique key for each element
-                  className="relative text-white text-5xl h-[35vh] rounded-3xl flex flex-col justify-end p-5"
-                  style={{
-                    background: `url(${image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-black opacity-40 rounded-3xl"></div>
-                  <div className="relative flex items-start justify-start">
-                    <span className="text-white text-5xl z-10">
-                      {number < 10 ? `0${number}` : number}
-                    </span>
-                  </div>
-                  <div className="relative flex items-end justify-start w-full">
-                    <span className="text-white text-sm border-b border-white z-10">
-                      {text}
-                    </span>
-                  </div>
-                </div>
-              ))}
+  data-scroll
+  data-scroll-section
+  data-scroll-speed="-0.1"
+  className="w-full bg-[#004D43] text-black p-10 sm:p-20 md:p-32 lg:p-40"
+>
+  <div className="w-full flex flex-col md:flex-row gap-5 border-[#a1b562]">
+    <div className="w-full md:w-1/2 flex items-start">
+      <span className="text-lg sm:text-xl md:text-2xl border-b border-black">
+        What you can expect:
+      </span>
+    </div>
+    <div className="w-full md:w-1/2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {boxData.map(({ number, text, image }) => (
+          <div
+            key={number} // Provide a unique key for each element
+            className="relative text-white text-3xl sm:text-4xl md:text-5xl h-[30vh] sm:h-[35vh] rounded-3xl flex flex-col justify-end p-3 sm:p-5"
+            style={{
+              background: `url(${image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <div className="absolute inset-0 bg-black opacity-40 rounded-3xl"></div>
+            <div className="relative flex items-start justify-start">
+              <span className="text-white text-3xl sm:text-4xl md:text-5xl z-10">
+                {number < 10 ? `0${number}` : number}
+              </span>
+            </div>
+            <div className="relative flex items-end justify-start w-full">
+              <span className="text-white text-xs sm:text-sm md:text-base border-b border-white z-10">
+                {text}
+              </span>
             </div>
           </div>
-        </div>
+        ))}
       </div>
+    </div>
+  </div>
+</div>
+
 
       <Ready />
       <Footer />
