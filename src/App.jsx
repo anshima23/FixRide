@@ -15,6 +15,7 @@ import OurWorks from "./Links/OurWorks";
 import AboutUs from "./Links/AboutUs";
 import Insights from "./Links/Insights";
 import Contact from "./Links/Contact";
+import Profile from "./Links/Profile";
 
 function App() {
   React.useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
