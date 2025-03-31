@@ -1,4 +1,4 @@
-import  { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { FaUserCircle } from "react-icons/fa";
@@ -26,24 +26,6 @@ function Navbar() {
       duration: 0.3,
       ease: "power2.out",
     });
-    gsap.to(linkRefs.current[index], {
-      y: -10,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power2.out",
-      onComplete: () => {
-        gsap.fromTo(
-          linkRefs.current[index],
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            ease: "power2.out",
-          }
-        );
-      },
-    });
   };
 
   const handleMouseLeave = (index) => {
@@ -51,12 +33,6 @@ function Navbar() {
       gsap.to(linkRefs.current[index].querySelector(".underline"), {
         scaleX: 0,
         opacity: 0,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-      gsap.to(linkRefs.current[index], {
-        y: 0,
-        opacity: 1,
         duration: 0.3,
         ease: "power2.out",
       });
@@ -90,30 +66,30 @@ function Navbar() {
         className="fixed top-0 left-0 w-full h-full bg-black flex items-center justify-center"
         style={{ transform: "translateY(100%)" }}
       >
-        <p className="text-white text-6xl font-bold">{overlayText}</p>
+        <p className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold">
+          {overlayText}
+        </p>
       </div>
-      <div className="fixed z-[999] w-full px-4 md:px-10 py-4 md:py-6 font-['Neue Montreal'] flex justify-between items-center bg-black bg-opacity-50">
-        <h1 className="text-xl md:text-2xl font-bold border-b-4 border-white pb-2">FixMyRide</h1>
-        <div className="flex gap-4 md:gap-8 items-center">
+      <div className="fixed z-[999] w-full px-2 sm:px-4 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-3 sm:py-4 md:py-5 lg:py-6 xl:py-7 bg-black bg-opacity-50 flex justify-between items-center">
+        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold border-b-4 border-white pb-1 lg:pb-2">FixMyRide</h1>
+        <div className="flex gap-2 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 items-center">
           {navItems.map((item, index) => (
             <Link
               key={index}
               ref={(el) => (linkRefs.current[index] = el)}
               to={item.path}
-              className="relative text-sm md:text-base capitalize font-light text-white overflow-hidden cursor-pointer"
+              className="relative text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl capitalize font-light text-white overflow-hidden cursor-pointer"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => handleClick(index, item.path, item.name)}
             >
               {item.name}
               <span
-                className={`underline absolute bottom-0 left-0 h-0.5 bg-white origin-left transition-transform ${
-                  index === activeIndex ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
-                }`}
+                className="underline absolute bottom-0 left-0 h-[1px] sm:h-[1.5px] md:h-[2px] lg:h-[2.5px] xl:h-[3px] bg-white origin-left transition-transform scale-x-0 opacity-0"
               ></span>
             </Link>
           ))}
-          <Link to="/profile" className="text-white text-2xl md:text-3xl">
+          <Link to="/profile" className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
             <FaUserCircle />
           </Link>
         </div>
