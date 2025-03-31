@@ -75,14 +75,14 @@ function AboutUs() {
       >
         {/* Animated Heading */}
         <motion.h1
-          className="absolute bottom-0 left-0 mb-8 ml-8 text-white text-7xl"
+          className="absolute bottom-0 left-0 mb-8 ml-8 text-white text-7xl md:text-7xl sm:text-sm"
           initial="initial"
           animate="animate"
           exit="exit"
           variants={headingVariants}
           transition={headingTransition}
         >
-          We save your time and ensure your safety with fast, reliable, <br />{" "}
+          We save your time and ensure your safety with fast, reliable, <br />
           and secure roadside assistance anytime, anywhere.
         </motion.h1>
 

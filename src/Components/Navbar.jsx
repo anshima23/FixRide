@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
 const navItems = [
   { name: "Services", path: "/services" },
@@ -15,6 +15,7 @@ function Navbar() {
   const linkRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(null);
   const [overlayText, setOverlayText] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const overlayRef = useRef(null);
 
@@ -81,6 +82,7 @@ function Navbar() {
         });
       },
     });
+    setMenuOpen(false);
   };
 
   return (
@@ -95,39 +97,56 @@ function Navbar() {
       </div>
 
       {/* Navbar */}
-      <div className="fixed z-[999] w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-3 sm:py-4 md:py-6 font-['Neue Montreal'] flex justify-between items-center bg-black bg-opacity-50">
-        
+      <div className="fixed z-[999] w-full px-6 py-4 flex justify-between items-center bg-black bg-opacity-50">
         {/* Logo */}
-        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold border-b-2 sm:border-b-4 border-white pb-1 sm:pb-2">
-          FixMyRide
-        </h1>
+        <h1 className="text-xl sm:text-2xl font-bold border-b-2 border-white pb-1">FixMyRide</h1>
 
-        {/* Navigation Links */}
-        <div className="flex gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 items-center">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex gap-6 items-center">
           {navItems.map((item, index) => (
             <Link
               key={index}
               ref={(el) => (linkRefs.current[index] = el)}
               to={item.path}
-              className="relative text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl capitalize font-light text-white overflow-hidden cursor-pointer"
+              className="relative text-white text-lg capitalize cursor-pointer"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => handleClick(index, item.path, item.name)}
             >
               {item.name}
-              <span
-                className={`underline absolute bottom-0 left-0 h-0.5 bg-white origin-left transition-transform ${
-                  index === activeIndex ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
-                }`}
-              ></span>
+              <span className="underline absolute bottom-0 left-0 h-0.5 bg-white transition-transform scale-x-0 opacity-0"></span>
             </Link>
           ))}
-
-          {/* Profile Icon */}
-          <Link to="/profile" className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+          <Link to="/profile" className="text-white text-2xl">
             <FaUserCircle />
           </Link>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden text-white text-3xl" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed top-0 left-0 w-full h-full bg-black flex flex-col items-center justify-center gap-6 text-white text-2xl transition-transform duration-500 ease-in-out transform ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {navItems.map((item, index) => (
+          <Link
+            key={index}
+            to={item.path}
+            className="hover:text-gray-400"
+            onClick={() => handleClick(index, item.path, item.name)}
+          >
+            {item.name}
+          </Link>
+        ))}
+        <Link to="/profile" className="text-3xl">
+          <FaUserCircle />
+        </Link>
       </div>
     </div>
   );
