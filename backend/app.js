@@ -10,8 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-app.use('/auth', require('./routes/authRoutes')); 
-app.use('/profile', require('./routes/profileRoutes'));
+app.use('/profile', require('./routes/profileRoutes')); // ✅ no auth required
 app.use('/contact', require('./routes/contactRoutes'));
+// Removed /auth route since not needed
 
 module.exports = app;

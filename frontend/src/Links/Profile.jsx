@@ -4,7 +4,6 @@ import profileImage from "../assets/profile.png";
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
-
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
@@ -13,23 +12,21 @@ function Profile() {
     age: "",
   });
 
-  // 🔄 Fetch user data when component loads
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("http://localhost:5000/profile", {
           method: "GET",
-          credentials: "include", // Include cookies for session auth
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         });
         if (res.ok) {
           const data = await res.json();
           setUserData(data);
+        } else {
+          console.error("Failed to fetch profile");
         }
       } catch (error) {
-        console.error("Failed to fetch profile", error);
+        console.error("Error fetching profile:", error);
       }
     };
     fetchUser();
@@ -37,21 +34,14 @@ function Profile() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ Save to DB when clicking "Save Profile"
   const handleSave = async () => {
     try {
       const res = await fetch("http://localhost:5000/profile", {
         method: "POST",
-        credentials: "include", // Include session cookie
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
@@ -63,12 +53,11 @@ function Profile() {
         alert("Failed to save profile");
       }
     } catch (err) {
-      console.error("Error saving profile", err);
+      console.error("Error saving profile:", err);
       alert("An error occurred while saving");
     }
   };
 
-  // 🔁 Toggle edit/save
   const toggleEdit = () => {
     if (isEditing) {
       handleSave();
@@ -78,7 +67,6 @@ function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
-      {/* Edit Profile Button */}
       <button
         onClick={toggleEdit}
         className="absolute top-20 right-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all shadow-lg"
@@ -86,14 +74,12 @@ function Profile() {
         {isEditing ? "Save Profile" : "Edit Profile"}
       </button>
 
-      {/* Profile Image */}
       <img
         src={profileImage}
         alt="Profile"
         className="w-40 h-40 md:w-52 md:h-52 rounded-full border-4 border-white shadow-lg mt-16"
       />
 
-      {/* Profile Details */}
       <div className="mt-6 w-full max-w-md space-y-4">
         {Object.entries(userData).map(([key, value], index) => (
           <div key={index} className="flex flex-col">
@@ -113,11 +99,10 @@ function Profile() {
         ))}
       </div>
 
-      {/* Social Links */}
       <div className="flex gap-6 mt-6">
-        {[FaGithub, FaLinkedin, FaTwitter].map((Icon, index) => (
+        {[FaGithub, FaLinkedin, FaTwitter].map((Icon, idx) => (
           <a
-            key={index}
+            key={idx}
             href="#"
             className="text-3xl text-white transition-transform transform hover:scale-125"
           >
