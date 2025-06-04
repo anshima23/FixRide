@@ -1,11 +1,10 @@
-import  { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import profileImage from "../assets/profile.png"; // Replace with your image
+import profileImage from "../assets/profile.png";
 
 function Profile() {
-  const [isEditing, setIsEditing] = useState(true); // Initially in edit mode if no data is present
+  const [isEditing, setIsEditing] = useState(false);
 
-  // User details (initially empty)
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
@@ -14,7 +13,28 @@ function Profile() {
     age: "",
   });
 
-  // Handle input change
+  // 🔄 Fetch user data when component loads
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/profile", {
+          method: "GET",
+          credentials: "include", // Include cookies for session auth
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUserData(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch profile", error);
+      }
+    };
+    fetchUser();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({
@@ -23,11 +43,44 @@ function Profile() {
     }));
   };
 
+  // ✅ Save to DB when clicking "Save Profile"
+  const handleSave = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/profile", {
+        method: "POST",
+        credentials: "include", // Include session cookie
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUserData(data);
+        alert("Profile saved successfully!");
+      } else {
+        alert("Failed to save profile");
+      }
+    } catch (err) {
+      console.error("Error saving profile", err);
+      alert("An error occurred while saving");
+    }
+  };
+
+  // 🔁 Toggle edit/save
+  const toggleEdit = () => {
+    if (isEditing) {
+      handleSave();
+    }
+    setIsEditing(!isEditing);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
       {/* Edit Profile Button */}
       <button
-        onClick={() => setIsEditing(!isEditing)}
+        onClick={toggleEdit}
         className="absolute top-20 right-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all shadow-lg"
       >
         {isEditing ? "Save Profile" : "Edit Profile"}
@@ -50,8 +103,8 @@ function Profile() {
               name={key}
               value={value}
               onChange={handleChange}
-              readOnly={!isEditing} // Editable only in edit mode
-              placeholder={key.charAt(0).toUpperCase() + key.slice(1)} // Placeholder based on field name
+              readOnly={!isEditing}
+              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
               className={`bg-gray-800 text-white text-lg font-semibold p-2 rounded-md border-2 ${
                 isEditing ? "border-blue-500" : "border-gray-600"
               } outline-none transition-all shadow-md cursor-${isEditing ? "text" : "default"}`}

@@ -1,24 +1,28 @@
 const express = require('express');
-const User = require('../models/userModel');
-const authenticate = require('../middlewares/authMiddleware'); // Import the authenticate middleware
 const router = express.Router();
+const User = require('../models/userModel');
+const authenticate = require('../middlewares/authMiddleware');
 
-// Get profile data
+// GET profile route
 router.get('/', authenticate, async (req, res) => {
   try {
-    const user = await User.findOne(); // Assuming one user for simplicity
+    const user = await User.findById(req.user); // req.user is user id from token
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching profile' });
+    console.error("Error fetching profile:", err);
+    res.status(500).json({ message: 'Error fetching profile', error: err.message });
   }
 });
 
-// Update profile data
+// POST profile route to update user profile
 router.post('/profile', authenticate, async (req, res) => {
   const { name, phone, location, vehicle, age } = req.body;
-  
+
   try {
-    const user = await User.findOne();
+    let user = await User.findById(req.user);
     if (user) {
       user.name = name;
       user.phone = phone;
@@ -26,14 +30,16 @@ router.post('/profile', authenticate, async (req, res) => {
       user.vehicle = vehicle;
       user.age = age;
       await user.save();
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
-      const newUser = new User(req.body);
-      await newUser.save();
-      res.status(201).json(newUser);
+      // Create new user document with the authenticated user's ID
+      user = new User({ _id: req.user, name, phone, location, vehicle, age });
+      await user.save();
+      return res.status(201).json(user);
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error updating profile' });
+    console.error("Error updating profile:", err);
+    res.status(500).json({ message: 'Error updating profile', error: err.message });
   }
 });
 
