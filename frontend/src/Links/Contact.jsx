@@ -4,25 +4,12 @@ import { motion } from "framer-motion";
 const inputFields = [
   { placeholder: "Your Name", label: "Hi! My name is" },
   { placeholder: "Phone Number", label: "Phone Number is " },
-  {
-    placeholder: "Location:",
-    label: "and I live in",
-  },
-  {
-    placeholder: "Vehicle Details",
-    label: "I have this vehicle",
-  },
-  {
-    placeholder: "Service Details",
-    label: "I'm looking for service",
-  },
+  { placeholder: "Location", label: "and I live in" },
+  { placeholder: "Vehicle Details", label: "I have this vehicle" },
+  { placeholder: "Service Details", label: "I'm looking for service" },
   { placeholder: "Facing Issue", label: "I am facing this issue" },
-  {
-    placeholder: "Additional Information",
-    label: "this is my contact method",
-  },
+  { placeholder: "Additional Information", label: "this is my contact method" },
 ];
-
 
 const box1Texts = [
   "How can I book a mechanic for emergency roadside assistance?",
@@ -33,35 +20,71 @@ const box1Texts = [
 
 function Contact() {
   const [rotate, setRotate] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    location: "",
+    vehicle: "",
+    serviceDetails: "",
+    issue: "",
+    additionalInfo: "",
+  });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       const mouseX = e.clientX;
       const mouseY = e.clientY;
-
       const deltaX = mouseX - window.innerWidth / 2;
       const deltaY = mouseY - window.innerHeight / 2;
-
       const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-      setRotate(angle - 90); // Adjust rotation
+      setRotate(angle - 90);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Form submitted successfully!");
+        setFormData({
+          name: "",
+          phone: "",
+          location: "",
+          vehicle: "",
+          serviceDetails: "",
+          issue: "",
+          additionalInfo: "",
+        });
+      } else {
+        alert(data.message || "Submission failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while submitting the form");
+    }
+  };
 
   const textVariants = {
     initial: { y: "100%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "-100%", opacity: 0 }
+    exit: { y: "-100%", opacity: 0 },
   };
 
   const textTransition = {
     duration: 0.5,
-    ease: "easeOut"
+    ease: "easeOut",
   };
 
   return (
@@ -74,7 +97,7 @@ function Contact() {
           data-scroll-speed="-0.3"
           className="w-full min-h-screen bg-zinc-900 pt-10 mb-30 flex flex-col"
         >
-          {/* Upper heading */}
+          {/* Heading */}
           <div className="textstructure mt-20 px-20 flex flex-col items-center">
             {["REACH OUT, ", " WE'RE HERE ANYTIME!"].map((item, index) => (
               <div className="masker" key={index}>
@@ -95,29 +118,52 @@ function Contact() {
             ))}
           </div>
 
-          {/* Form part */}
+          {/* Form */}
           <div className="text-white pt-10 m-10 flex flex-col items-center">
             <h1 className="text-xl mb-10">Fill the form below:</h1>
-            <form className="text-7xl flex flex-col gap-4 w-full max-w-4xl">
-              {inputFields.map((field, index) => (
-                <div key={index} className="flex flex-col gap-2">
-                  <label className="text-5xl">
-                    {field.label}
-                    <input
-                      type="text"
-                      placeholder={field.placeholder}
-                      className="bg-zinc-900 text-white border-b border-white placeholder:text-xs placeholder:text-center focus:outline-none w-full"
-                    />
-                  </label>
-                </div>
-              ))}
-              {/* Container for checkbox and button */}
+            <form
+              onSubmit={handleSubmit}
+              className="text-7xl flex flex-col gap-4 w-full max-w-4xl"
+            >
+              {inputFields.map((field, index) => {
+                const keys = [
+                  "name",
+                  "phone",
+                  "location",
+                  "vehicle",
+                  "serviceDetails",
+                  "issue",
+                  "additionalInfo",
+                ];
+                return (
+                  <div key={index} className="flex flex-col gap-2">
+                    <label className="text-5xl">
+                      {field.label}
+                      <input
+                        type="text"
+                        placeholder={field.placeholder}
+                        value={formData[keys[index]]}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            [keys[index]]: e.target.value,
+                          })
+                        }
+                        className="bg-zinc-900 text-white border-b border-white placeholder:text-xs placeholder:text-center focus:outline-none w-full"
+                      />
+                    </label>
+                  </div>
+                );
+              })}
               <div className="flex justify-end mt-10 items-center gap-4 w-full max-w-4xl">
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" />
                   <span className="text-lg">I agree with privacy policy</span>
                 </label>
-                <button className="px-4 py-2 bg-zinc-700 text-black rounded-full text-sm">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-zinc-700 text-black rounded-full text-sm"
+                >
                   Send Enquiry
                 </button>
               </div>
@@ -125,20 +171,22 @@ function Contact() {
           </div>
         </div>
 
-        {/* Space between hero section and Instagram section */}
-        <div className="w-full h-[20vh] bg-transparent"></div> {/* Adjust height as needed */}
-
-        {/* Instagram Facebook Section */}
+        {/* Instagram Section */}
+        <div className="w-full h-[20vh] bg-transparent"></div>
         <div
           data-scroll
           data-scroll-section
           data-scroll-speed=".02"
           className="w-full min-h-screen py-40 bg-[#CDEA68] rounded-tl-3xl rounded-tr-3xl text-black flex flex-col items-center justify-center"
         >
-          {/* Text and Buttons */}
           <div className="flex flex-col items-center relative z-10">
             <h1 className="font-['Neue_Montreal'] text-[7vw] leading-[10vw] tracking-tight text-center">
-              {["DELIVERYPERSONNEL", "EMERGENCY RESPONDERS", "ON-DEMAND TECHNICIANS", "ROADSIDE ASSISTANCE PROVIDERS"].map((text, index) => (
+              {[
+                "DELIVERYPERSONNEL",
+                "EMERGENCY RESPONDERS",
+                "ON-DEMAND TECHNICIANS",
+                "ROADSIDE ASSISTANCE PROVIDERS",
+              ].map((text, index) => (
                 <motion.span
                   key={index}
                   className="block relative"
@@ -153,7 +201,10 @@ function Contact() {
                       key={charIndex}
                       className="inline-block"
                       variants={textVariants}
-                      transition={{ ...textTransition, delay: charIndex * 0.05 }}
+                      transition={{
+                        ...textTransition,
+                        delay: charIndex * 0.05,
+                      }}
                     >
                       {char}
                     </motion.span>
@@ -162,7 +213,7 @@ function Contact() {
               ))}
             </h1>
 
-            {/* Eyes positioned above the text */}
+            {/* Eyes animation */}
             <div className="absolute flex gap-10 top-[10%]">
               {[0, 1].map((i) => (
                 <div
@@ -188,7 +239,7 @@ function Contact() {
           </div>
         </div>
 
-        {/* Ask Something Section */}
+        {/* Questions */}
         <div className="relative flex flex-col w-full h-screen bg-zinc-900 p-20 border-2">
           <h1 className="text-7xl mb-10">
             A few things you
@@ -207,14 +258,13 @@ function Contact() {
                         bottom: 2,
                         left: 0,
                         width: "30%",
-                        height: "1px", // Adjust thickness
-                        backgroundColor: "white", // Adjust color
+                        height: "1px",
+                        backgroundColor: "white",
                       }}
                     />
                     Read More
                   </div>
                 </div>
-                {/* Underline after each row */}
                 <div className="w-full border-b border-gray-300 mt-4"></div>
               </div>
             ))}
