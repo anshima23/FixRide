@@ -16,7 +16,7 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/profile", {
+        const res = await fetch("https://fixride-backend.onrender.com/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch("http://localhost:5000/profile", {
+      const res = await fetch("https://fixride-backend.onrender.com/profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
