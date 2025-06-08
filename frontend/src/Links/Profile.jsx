@@ -12,57 +12,38 @@ function Profile() {
     age: "",
   });
 
-  // Fetch the latest profile data
+  // GET profile
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchProfile = async () => {
       try {
-        const res = await fetch("https://fixride-backend.onrender.com/profile", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setUserData(data);
-        } else {
-          console.error("Failed to fetch profile");
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
+        const res = await fetch("https://fixride-backend.onrender.com/profile");
+        if (!res.ok) throw new Error("Failed to fetch profile");
+        const data = await res.json();
+        setUserData(data);
+      } catch (err) {
+        console.error("Fetch error:", err);
       }
     };
-    fetchUser();
+    fetchProfile();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
+  // POST updated profile
   const handleSave = async () => {
     try {
       const res = await fetch("https://fixride-backend.onrender.com/profile", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setUserData(data);
-        alert("Profile saved successfully!");
-      } else {
-        alert("Failed to save profile");
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to save profile");
+
+      setUserData(data);
+      alert("Profile saved successfully!");
     } catch (err) {
-      console.error("Error saving profile:", err);
-      alert("An error occurred while saving");
+      console.error("Save error:", err);
+      alert(err.message || "An error occurred while saving");
     }
   };
 
@@ -71,6 +52,15 @@ function Profile() {
       handleSave();
     }
     setIsEditing(!isEditing);
+  };
+
+  // ✅ FIXED: handleChange function
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
