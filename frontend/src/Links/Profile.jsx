@@ -12,12 +12,15 @@ function Profile() {
     age: "",
   });
 
+  // Fetch the latest profile data
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("http://localhost:5000/profile", {
           method: "GET",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
         if (res.ok) {
           const data = await res.json();
@@ -34,14 +37,19 @@ function Profile() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSave = async () => {
     try {
       const res = await fetch("http://localhost:5000/profile", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(userData),
       });
 
@@ -81,28 +89,30 @@ function Profile() {
       />
 
       <div className="mt-6 w-full max-w-md space-y-4">
-        {Object.entries(userData).map(([key, value], index) => (
-          <div key={index} className="flex flex-col">
-            <label className="text-gray-300 text-sm mb-1 capitalize">{key}</label>
-            <input
-              type="text"
-              name={key}
-              value={value}
-              onChange={handleChange}
-              readOnly={!isEditing}
-              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-              className={`bg-gray-800 text-white text-lg font-semibold p-2 rounded-md border-2 ${
-                isEditing ? "border-blue-500" : "border-gray-600"
-              } outline-none transition-all shadow-md cursor-${isEditing ? "text" : "default"}`}
-            />
-          </div>
-        ))}
+        {Object.entries(userData)
+          .filter(([key]) => key !== "_id" && key !== "__v")
+          .map(([key, value], index) => (
+            <div key={index} className="flex flex-col">
+              <label className="text-gray-300 text-sm mb-1 capitalize">{key}</label>
+              <input
+                type="text"
+                name={key}
+                value={value}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                className={`bg-gray-800 text-white text-lg font-semibold p-2 rounded-md border-2 ${
+                  isEditing ? "border-blue-500" : "border-gray-600"
+                } outline-none transition-all shadow-md cursor-${isEditing ? "text" : "default"}`}
+              />
+            </div>
+          ))}
       </div>
 
       <div className="flex gap-6 mt-6">
-        {[FaGithub, FaLinkedin, FaTwitter].map((Icon, idx) => (
+        {[FaGithub, FaLinkedin, FaTwitter].map((Icon, index) => (
           <a
-            key={idx}
+            key={index}
             href="#"
             className="text-3xl text-white transition-transform transform hover:scale-125"
           >
