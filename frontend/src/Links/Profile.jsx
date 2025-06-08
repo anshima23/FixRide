@@ -4,15 +4,19 @@ import profileImage from "../assets/profile.png";
 
 function Profile() {
   const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState(null); // null until fetched
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [userData, setUserData] = useState({
+    name: "",
+    phone: "",
+    location: "",
+    vehicle: "",
+    age: "",
+  });
 
   // Fetch the latest profile data
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("https://fix-ride-polm.vercel.app/profile", {
+        const res = await fetch("http://localhost:5000/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -21,14 +25,11 @@ function Profile() {
         if (res.ok) {
           const data = await res.json();
           setUserData(data);
-          setError(null);
         } else {
-          setError("Failed to fetch profile");
+          console.error("Failed to fetch profile");
         }
       } catch (error) {
-        setError("Error fetching profile");
-      } finally {
-        setLoading(false);
+        console.error("Error fetching profile:", error);
       }
     };
     fetchUser();
@@ -44,7 +45,7 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch("https://fix-ride-polm.vercel.app/profile", {
+      const res = await fetch("http://localhost:5000/profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,17 +73,8 @@ function Profile() {
     setIsEditing(!isEditing);
   };
 
-  if (loading) return <div className="text-white text-center mt-20">Loading profile...</div>;
-
-  if (error)
-    return (
-      <div className="text-red-500 text-center mt-20">
-        {error}
-      </div>
-    );
-
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6 relative">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
       <button
         onClick={toggleEdit}
         className="absolute top-20 right-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all shadow-lg"
@@ -105,13 +97,13 @@ function Profile() {
               <input
                 type="text"
                 name={key}
-                value={value || ""}
+                value={value}
                 onChange={handleChange}
                 readOnly={!isEditing}
                 placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
                 className={`bg-gray-800 text-white text-lg font-semibold p-2 rounded-md border-2 ${
-                  isEditing ? "border-blue-500 cursor-text" : "border-gray-600 cursor-default"
-                } outline-none transition-all shadow-md`}
+                  isEditing ? "border-blue-500" : "border-gray-600"
+                } outline-none transition-all shadow-md cursor-${isEditing ? "text" : "default"}`}
               />
             </div>
           ))}

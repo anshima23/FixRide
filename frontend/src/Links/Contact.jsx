@@ -64,7 +64,7 @@ function Contact() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://fix-ride-polm.vercel.app/contact", {
+      const res = await fetch("http://localhost:5000/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -136,13 +136,16 @@ function Contact() {
                   id={field.key}
                   name={field.key}
                   type={field.key === "phone" ? "tel" : "text"}
-                  pattern={field.key === "phone" ? "[0-9]{10}" : undefined}
                   required
+                  pattern={field.key === "phone" ? "\\d{10,}" : undefined}
+                  title={field.key === "phone" ? "Enter a valid phone number (at least 10 digits)" : undefined}
                   placeholder={field.placeholder}
                   value={formData[field.key]}
-                  onChange={(e) =>
-                    setFormData({ ...formData, [field.key]: e.target.value })
-                  }
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const cleaned = field.key === "phone" ? value.replace(/\D/g, "") : value;
+                    setFormData({ ...formData, [field.key]: cleaned });
+                  }}
                   className="bg-zinc-900 border-b border-white py-2 px-1 placeholder:text-sm focus:outline-none"
                 />
               </div>
@@ -220,9 +223,7 @@ function Contact() {
                 <div className="w-full sm:w-[53%] p-4 border border-gray-300">{text}</div>
                 <div className="w-full sm:w-[23%] p-4 border border-gray-300">Description:</div>
                 <div className="w-full sm:w-[23%] p-4 border border-gray-300 relative">
-                  <span
-                    className="absolute bottom-1 left-0 w-[30%] h-[1px] bg-white"
-                  />
+                  <span className="absolute bottom-1 left-0 w-[30%] h-[1px] bg-white" />
                   Read More
                 </div>
               </div>
